@@ -1,0 +1,29 @@
+name: flutter_mkpv
+description: A new Flutter project.
+
+publish_to: 'none' 
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_markdown: ^0.6.10+2
+  markdown: 
+  path_provider: ^2.0.10
+  url_launcher: 
+  mkpv_socket:
+    path: ./mkpv_socket/
+    
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

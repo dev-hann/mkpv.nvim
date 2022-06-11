@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
@@ -18,13 +20,13 @@ class MarkdownViewModel {
       case RequestType.connect:
         break;
       case RequestType.scroll:
-        // TODO: Handle this case.
+        jumpToScroll(request.data);
         break;
       case RequestType.update:
         updateMarkdown(request.data);
         return;
       case RequestType.close:
-        break;
+        exit(0);
     }
   }
 
@@ -39,14 +41,12 @@ class MarkdownViewModel {
 
   final ScrollController scrollController = ScrollController();
   void jumpToScroll(double position) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final maxScroll = scrollController.position.maxScrollExtent;
-      scrollController.animateTo(
-        maxScroll * position,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.linearToEaseOut,
-      );
-    });
+    final maxScroll = scrollController.position.maxScrollExtent;
+    scrollController.animateTo(
+      maxScroll * position,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.linearToEaseOut,
+    );
   }
 
   void onTapLink(String text, String? href, String? title) {

@@ -4,6 +4,8 @@ import 'package:mkpv_socket/socket/socket_server.dart';
 class SocketService {
   final MkpvSocketServer server = MkpvSocketServer();
 
+  bool get isEmpty => server.clientList.isEmpty;
+
   Future<Stream<MkpvSocket>> bind() async {
     return server.bind();
   }

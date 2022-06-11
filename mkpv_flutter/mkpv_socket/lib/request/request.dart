@@ -22,6 +22,9 @@ class Request {
     return Request(RequestType.update.index, data);
   }
 
+  factory Request.close() {
+    return Request(RequestType.close.index);
+  }
   Map<String, dynamic> toMap() {
     return {
       "typeIndex": typeIndex,

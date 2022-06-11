@@ -21,13 +21,15 @@
 " OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 " WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-function! mkpv#open_mkpv()
-  echo "hello"
+let s:src_path=stdpath('data').'/plugged/mkpv.nvim'
+let s:mkpv = s:src_path.'/app/mkpv'
+function! mkpv#open_mkpv(file_path)
+  let output = system(s:mkpv.' open '.a:file_path.' &')
+  " echo output
 endfunction
 
 function! mkpv#close_mkpv()
-  echo "hello"
+  let output = system(s:mkpv.' close')
 endfunction
 
 function! mkpv#scroll_mkpv()

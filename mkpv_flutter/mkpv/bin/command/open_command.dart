@@ -63,23 +63,10 @@ class OpenCommand extends Command {
   }
 
   void serverListener(MkpvSocket socket) {
-    void onClientData(Request request) {
-      final type = request.type;
-      switch (type) {
-        case RequestType.connect:
-          server.addClient(socket);
-          // print("connected !! $socket");
-          updateMarkdown(socket);
-          break;
-        case RequestType.close:
-          socket.dispose();
-          exit(0);
-        case RequestType.update:
-          break;
-        case RequestType.scroll:
-          server.notifyClients(request);
-          break;
-      }
+    void closeServer() {
+      server.notifyClients(Request.close());
+      socket.dispose();
+      exit(0);
     }
 
     void onClientError(dynamic err) {
@@ -92,6 +79,27 @@ class OpenCommand extends Command {
       print("client left");
       server.removeClient(socket);
       socket.dispose();
+      if (server.isEmpty) {
+        closeServer();
+      }
+    }
+
+    void onClientData(Request request) {
+      final type = request.type;
+      switch (type) {
+        case RequestType.connect:
+          server.addClient(socket);
+          updateMarkdown(socket);
+          break;
+        case RequestType.close:
+          closeServer();
+          break;
+        case RequestType.update:
+          break;
+        case RequestType.scroll:
+          server.notifyClients(request);
+          break;
+      }
     }
 
     socket.addListener(

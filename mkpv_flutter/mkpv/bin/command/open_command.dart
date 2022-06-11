@@ -24,8 +24,9 @@ class OpenCommand extends Command {
   }
 
   void openApp() {
-    final dir = Directory.current;
-    Process.run("./flutter_mkpv", [], workingDirectory: "${dir.path}/bundle/");
+    final home = Platform.environment['HOME'];
+    final dir = '$home/.local/share/nvim/plugged/mkpv.nvim/app';
+    Process.run("./flutter_mkpv", [], workingDirectory: "$dir/bundle/");
   }
 
   final WatcherService watcher = WatcherService();

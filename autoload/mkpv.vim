@@ -21,14 +21,3 @@
 " OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 " WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-if exist('g:loaded_mkpv')
-	finish
-endif
-
-let g:loaded_mkpv=1
-
-function s:open_mkpv()
-	echo "hello"
-endfunction
-
-command! MKPVOpen call<SID>open_mkpv()

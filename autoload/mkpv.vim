@@ -32,7 +32,8 @@ endfunction
 
 function! mkpv#update_mkpv()
   call s:auto_save()
-  call s:auto_scroll()
+  " image size?
+  " call s:auto_scroll()
 endfunction
 
 function! s:auto_save()

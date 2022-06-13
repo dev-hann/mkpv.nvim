@@ -54,4 +54,10 @@ class MarkdownViewModel {
     if (address == null) return;
     launchUrlString(address);
   }
+
+  final ValueNotifier<bool> darkModeNotifier = ValueNotifier(false);
+
+  void onTapMode() {
+    darkModeNotifier.value = !darkModeNotifier.value;
+  }
 }

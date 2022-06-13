@@ -12,6 +12,11 @@ let s:src_path=stdpath('data').'/plugged/mkpv.nvim'
 let g:mkpv = s:src_path.'/app/mkpv'
 let g:auto_open_mkpv = get(g:,'auto_open_mkpv',0)
 
+" let g:auto_save_mkpv = get(g:,'auto_save_mkpv',0)
+" let g:auto_scroll_mkpv = get(g:,'auto_scroll_mkpv',0)
+
+
+
 function! s:file_path()
   let temp_path=expand('%:p')
   if !isdirectory(temp_path)

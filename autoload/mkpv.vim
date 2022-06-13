@@ -22,7 +22,7 @@
 " WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 function! mkpv#open_mkpv(file_path)
-  " call mkpv#autocmd_init()
+  call mkpv#autocmd_init()
   let output = system(g:mkpv.' open '.a:file_path.' &')
 endfunction
 
@@ -31,7 +31,19 @@ function! mkpv#close_mkpv()
 endfunction
 
 function! mkpv#update_mkpv()
- 
+  call s:auto_save()
+  call s:auto_scroll()
+endfunction
+
+function! s:auto_save()
+   write
+endfunction
+
+function! s:auto_scroll()
+  let current_line = line(".")
+  let max_line = line("$") + 0.0
+  let position = current_line/max_line
+  let output = system(g:mkpv.' scroll '.string(position))
 endfunction
 
 
@@ -40,18 +52,15 @@ function! mkpv#scroll_mkpv(position)
 endfunction
 
 function! mkpv#autocmd_init()
-
   execute 'augroup MKPV_AUTOCMD_INIT' . bufnr('%')
   autocmd!
 
-  " autocmd CursorHold,CursorHoldI,CursorMoved,CursorMovedI <buffer> echo bufnr('%')
-
-  " autocmd BufHidden <buffer> call mkpv#close_mkpv()
-  autocmd BufHidden <buffer> echo "HHHHHCLOSED!!"
+  " autocmd CursorMoved,CursorMovedI <buffer> call s:auto_scroll()
+  autocmd CursorHold,CursorHoldI <buffer> call mkpv#update_mkpv()
+  " auto close  
+  autocmd BufHidden <buffer> call mkpv#close_mkpv()
 endfunction
 
 function! mkpv#autocmd_dispose()
   execute 'autocmd! ' . 'MKPV_AUTOCMD_INIT' . bufnr('%')
 endfunction
-
-

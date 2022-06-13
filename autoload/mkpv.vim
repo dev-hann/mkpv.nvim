@@ -33,7 +33,15 @@ endfunction
 function! mkpv#update_mkpv()
   call s:auto_save()
   " image size?
-  " call s:auto_scroll()
+   call s:auto_scroll()
+endfunction
+
+function! mkpv#toggle_auto_scroll()
+  if g:auto_scroll_mkpv == 1
+    let g:auto_scroll_mkpv=0
+  else
+   let g:auto_scroll_mkpv=1
+  endif
 endfunction
 
 function! s:auto_save()
@@ -41,10 +49,12 @@ function! s:auto_save()
 endfunction
 
 function! s:auto_scroll()
-  let current_line = line(".")
-  let max_line = line("$") + 0.0
-  let position = current_line/max_line
-  let output = system(g:mkpv.' scroll '.string(position))
+  if g:auto_scroll_mkpv == 1
+    let current_line = line(".")
+    let max_line = line("$") + 0.0
+    let position = current_line/max_line
+    let output = system(g:mkpv.' scroll '.string(position))
+  endif
 endfunction
 
 

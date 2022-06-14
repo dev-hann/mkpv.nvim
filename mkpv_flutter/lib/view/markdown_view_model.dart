@@ -1,6 +1,9 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:markdown_widget/markdown_generator.dart';
+import 'package:markdown_widget/markdown_toc.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -34,9 +37,13 @@ class MarkdownViewModel {
     socket.dispose();
   }
 
-  final ValueNotifier<String> markdownNotofier = ValueNotifier("");
+  final ValueNotifier<MarkdownGenerator?> markdownNotofier =
+      ValueNotifier(null);
   void updateMarkdown(String data) {
-    markdownNotofier.value = data;
+    markdownNotofier.value = MarkdownGenerator(
+      data: data,
+      childMargin: const EdgeInsets.all(16),
+    );
   }
 
   final ScrollController scrollController = ScrollController();

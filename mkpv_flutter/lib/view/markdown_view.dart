@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_mkpv/view/markdown_view_model.dart';
+import 'package:markdown/markdown.dart';
 
 class MarkdownView extends StatefulWidget {
   const MarkdownView({Key? key}) : super(key: key);
@@ -52,6 +53,7 @@ class MarkdownViewState extends State<MarkdownView> {
               builder: (_, markdown, __) {
                 return MarkdownBody(
                   data: markdown,
+                  extensionSet: ExtensionSet.gitHubWeb,
                 );
               },
             ),

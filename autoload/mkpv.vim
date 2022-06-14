@@ -51,9 +51,10 @@ endfunction
 function! s:auto_scroll()
   if g:auto_scroll_mkpv == 1
     let current_line = line(".")
-    let max_line = line("$") + 0.0
-    let position = current_line/max_line
-    let output = system(g:mkpv.' scroll '.string(position))
+    " let max_line = line("$") + 0.0
+    " let position = current_line/max_line
+    " let output = system(g:mkpv.' scroll '.string(position))
+     let output = system(g:mkpv.' scroll '.string(current_line))
   endif
 endfunction
 

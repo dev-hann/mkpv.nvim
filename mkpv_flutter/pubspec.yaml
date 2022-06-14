@@ -12,7 +12,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  markdown_widget: ^1.2.9
+  # markdown_widget: ^1.2.9
+  scroll_to_index: 
+  flutter_markdown:
   path_provider: ^2.0.10
   url_launcher: 
   mkpv_socket:

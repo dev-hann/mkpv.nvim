@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_mkpv/view/markdown_view_model.dart';
-import 'package:markdown_widget/markdown_widget.dart';
 
 class MarkdownView extends StatefulWidget {
   const MarkdownView({Key? key}) : super(key: key);
@@ -45,14 +45,13 @@ class MarkdownViewState extends State<MarkdownView> {
         return Scaffold(
           floatingActionButton: _floatingActionButton(),
           body: SingleChildScrollView(
-            child: ValueListenableBuilder<MarkdownGenerator?>(
+            controller: viewModel.scrollController,
+            padding: const EdgeInsets.all(16),
+            child: ValueListenableBuilder<String>(
               valueListenable: viewModel.markdownNotofier,
               builder: (_, markdown, __) {
-                if (markdown == null) return const SizedBox();
-                final List<Widget> children =
-                    markdown.widgets ?? [const SizedBox()];
-                return Column(
-                  children: children,
+                return MarkdownBody(
+                  data: markdown,
                 );
               },
             ),

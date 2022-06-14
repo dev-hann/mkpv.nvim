@@ -13,7 +13,7 @@ class ScrollCommand extends SocketCommand {
   @override
   void run() async {
     await connect();
-    final position = double.tryParse(arguments.first) ?? 0.0;
+    final position = int.tryParse(arguments.first) ?? 1;
     send(position);
     socket.dispose();
     exit(0);

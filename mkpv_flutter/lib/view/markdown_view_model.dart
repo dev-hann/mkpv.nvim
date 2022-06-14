@@ -1,11 +1,9 @@
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:markdown_widget/markdown_generator.dart';
-import 'package:markdown_widget/markdown_toc.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class MarkdownViewModel {
@@ -37,23 +35,16 @@ class MarkdownViewModel {
     socket.dispose();
   }
 
-  final ValueNotifier<MarkdownGenerator?> markdownNotofier =
-      ValueNotifier(null);
-  void updateMarkdown(String data) {
-    markdownNotofier.value = MarkdownGenerator(
-      data: data,
-      childMargin: const EdgeInsets.all(16),
-    );
-  }
+  final ValueNotifier<String> markdownNotofier = ValueNotifier("");
 
-  final ScrollController scrollController = ScrollController();
-  void jumpToScroll(double position) {
-    final maxScroll = scrollController.position.maxScrollExtent;
-    scrollController.animateTo(
-      maxScroll * position,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.linearToEaseOut,
-    );
+  void updateMarkdown(String data) {
+    markdownNotofier.value = data;
+  }
+  
+  final AutoScrollController scrollController = AutoScrollController();
+  void jumpToScroll(int line) {
+    // scrollController.scrollToIndex(line,
+    //     preferPosition: AutoScrollPosition.middle);
   }
 
   void onTapLink(String text, String? href, String? title) {

@@ -1,32 +1,22 @@
 import 'dart:io';
 
-import 'package:args/args.dart';
+import 'package:args/command_runner.dart';
 
-import 'command/command.dart';
-import 'enum/command_type.dart';
+import 'command/close_command.dart';
+import 'command/open_command.dart';
+import 'command/srcoll_command.dart';
+
 void main(List<String> arguments) {
-  handleExitApp();
-  final parser = ArgParser();
-  for (final item in CommandType.values) {
-    parser.addCommand(item.toCommand());
-  }
-  final res = parser.parse(arguments);
-  final command = res.command;
-  if (command == null) {
-    print("No Such Command!");
-    return;
-  }
+  final runner = CommandRunner("mkpv", "Markdown Perview for Vim.")
+    ..addCommand(OpenCommand())
+    ..addCommand(CloseCommand())
+    ..addCommand(ScrollCommand());
 
-  final commandName = command.name!;
-  final args = command.arguments;
-  final commandType = commandName.toCommand()!;
-  final cmd = Command.fromType(commandType, args);
-  cmd.run();
-}
-
-void handleExitApp() {
-  ProcessSignal.sigint.watch().listen((_) {
-    print("Stopped mkpv Server");
-    exit(0);
+  runner.run(arguments).catchError((e) {
+    if (e is! UsageException) {
+      throw e;
+    }
+    print(e);
+    exit(64);
   });
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:markdown/markdown.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 import 'package:watcher/watcher.dart';
@@ -9,16 +10,21 @@ import '../service/socket/socket_service.dart';
 import '../service/watcher/watcher_service.dart';
 import 'command.dart';
 
-class OpenCommand extends Command {
-  OpenCommand(super.arguments);
+class OpenCommand extends MKPVCommand {
+  @override
+  String get name => 'open';
+
+  @override
+  String get description => 'Run MKPV Server & View.';
 
   @override
   void run() {
-    if (arguments.isEmpty || arguments.first.isEmpty) {
-      print("markdown Path can not be empty!");
-      exit(0);
-    }
-    initWatch(arguments.first);
+    final list = argResults!.arguments;
+    // if (arguments.isEmpty || arguments.first.isEmpty) {
+    //   print("markdown Path can not be empty!");
+    //   exit(0);
+    // }
+    initWatch(list.first);
     initServer();
     openApp();
   }
@@ -42,7 +48,11 @@ class OpenCommand extends Command {
   }
 
   void updateMarkdown([MkpvSocket? client]) {
-    final request = Request.update(watcher.data);
+    final mk = markdownToHtml(
+      watcher.data,
+      extensionSet: ExtensionSet.gitHubWeb,
+    );
+    final request = Request.update(mk);
     if (client != null) {
       client.send(request);
     } else {

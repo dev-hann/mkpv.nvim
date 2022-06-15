@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:markdown/markdown.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -38,11 +37,7 @@ class MarkdownViewModel {
 
   final ValueNotifier<String> markdownNotofier = ValueNotifier("");
   void updateMarkdown(String data) {
-    markdownNotofier.value = markdownToHtml(
-      data,
-      extensionSet: ExtensionSet.gitHubWeb,
-    );
-    // print(markdownNotofier.value);
+    markdownNotofier.value = data;
   }
 
   final AutoScrollController scrollController = AutoScrollController();

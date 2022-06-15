@@ -4,7 +4,7 @@ enum CommandType {
   scroll,
 }
 
-List<String> commandList = [
+const List<String> commandList = [
   "open",
   "close",
   "scroll",

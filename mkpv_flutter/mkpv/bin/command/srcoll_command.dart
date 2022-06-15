@@ -1,20 +1,22 @@
 import 'dart:io';
 
-import 'package:mkpv_socket/mkpv_socket.dart';
+import 'package:mkpv_socket/request/request.dart';
 
 import 'command.dart';
 
-class ScrollCommand extends SocketCommand {
-  ScrollCommand(super.arguments);
+class ScrollCommand extends MKPVCommand with SocketCommandMixin {
+  @override
+  String get name => 'scroll';
 
   @override
-  RequestType get type => RequestType.scroll;
+  String get description => 'View Scroll to Current Editor Line.';
 
   @override
   void run() async {
+    final list = argResults!.arguments;
     await connect();
-    final position = int.tryParse(arguments.first) ?? 1;
-    send(position);
+    final line = int.tryParse(list.first) ?? 1;
+    send(RequestType.scroll, line);
     socket.dispose();
     exit(0);
   }

@@ -4,16 +4,17 @@ import 'package:mkpv_socket/mkpv_socket.dart';
 
 import 'command.dart';
 
-class CloseCommand extends SocketCommand {
-  CloseCommand() : super([]);
+class CloseCommand extends MKPVCommand with SocketCommandMixin {
+  @override
+  String get description => 'Close MkPV Server & View.';
 
   @override
-  RequestType get type => RequestType.close;
+  String get name => 'close';
 
   @override
   void run() async {
     await connect();
-    send();
+    send(RequestType.close);
     socket.dispose();
     exit(0);
   }

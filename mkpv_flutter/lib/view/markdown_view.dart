@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_html_table/flutter_html_table.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_mkpv/view/markdown_view_model.dart';
 import 'package:markdown/markdown.dart';
@@ -37,6 +39,22 @@ class MarkdownViewState extends State<MarkdownView> {
     );
   }
 
+  Widget _body() {
+    return SingleChildScrollView(
+      controller: viewModel.scrollController,
+      padding: const EdgeInsets.all(16),
+      child: ValueListenableBuilder<String>(
+        valueListenable: viewModel.markdownNotofier,
+        builder: (_, markdown, __) {
+          return MarkdownBody(
+            data: markdown,
+            extensionSet: ExtensionSet.gitHubWeb,
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
@@ -46,14 +64,15 @@ class MarkdownViewState extends State<MarkdownView> {
         return Scaffold(
           floatingActionButton: _floatingActionButton(),
           body: SingleChildScrollView(
-            controller: viewModel.scrollController,
             padding: const EdgeInsets.all(16),
             child: ValueListenableBuilder<String>(
               valueListenable: viewModel.markdownNotofier,
               builder: (_, markdown, __) {
-                return MarkdownBody(
+                return Html(
                   data: markdown,
-                  extensionSet: ExtensionSet.gitHubWeb,
+                  customRenders: {
+                    tableMatcher(): tableRender(),
+                  },
                 );
               },
             ),

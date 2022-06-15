@@ -40,9 +40,9 @@ class MarkdownViewModel {
   void updateMarkdown(String data) {
     markdownNotofier.value = markdownToHtml(
       data,
-      extensionSet: ExtensionSet.gitHubFlavored,
+      extensionSet: ExtensionSet.gitHubWeb,
     );
-    print(markdownNotofier.value);
+    // print(markdownNotofier.value);
   }
 
   final AutoScrollController scrollController = AutoScrollController();

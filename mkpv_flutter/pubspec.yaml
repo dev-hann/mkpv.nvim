@@ -13,10 +13,8 @@ dependencies:
   flutter_html: ^3.0.0-alpha.3
   cupertino_icons: ^1.0.2
   flutter_html_table: ^3.0.0-alpha.3
-  # markdown_widget: ^1.2.9
   markdown: 
   scroll_to_index: 
-  flutter_markdown:
   path_provider: ^2.0.10
   url_launcher: 
   mkpv_socket:

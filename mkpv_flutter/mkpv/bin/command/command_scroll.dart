@@ -1,8 +1,4 @@
-import 'dart:io';
-
-import 'package:mkpv_socket/request/request.dart';
-
-import 'command.dart';
+part of mkpv_command;
 
 class ScrollCommand extends MKPVCommand with SocketCommandMixin {
   @override

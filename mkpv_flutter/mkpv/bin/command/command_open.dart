@@ -1,14 +1,4 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:markdown/markdown.dart';
-import 'package:mkpv_socket/mkpv_socket.dart';
-import 'package:mkpv_socket/socket/socket_server.dart';
-import 'package:watcher/watcher.dart';
-
-import '../service/socket/socket_service.dart';
-import '../service/watcher/watcher_service.dart';
-import 'command.dart';
+part of mkpv_command;
 
 class OpenCommand extends MKPVCommand {
   @override
@@ -20,10 +10,10 @@ class OpenCommand extends MKPVCommand {
   @override
   void run() {
     final list = argResults!.arguments;
-    // if (arguments.isEmpty || arguments.first.isEmpty) {
-    //   print("markdown Path can not be empty!");
-    //   exit(0);
-    // }
+    if (list.isEmpty) {
+      print("markdown Path can not be empty!");
+      exit(0);
+    }
     initWatch(list.first);
     initServer();
     openApp();

@@ -1,8 +1,4 @@
-import 'dart:io';
-
-import 'package:mkpv_socket/mkpv_socket.dart';
-
-import 'command.dart';
+part of mkpv_command;
 
 class CloseCommand extends MKPVCommand with SocketCommandMixin {
   @override

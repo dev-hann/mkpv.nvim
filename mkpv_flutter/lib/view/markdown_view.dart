@@ -60,6 +60,8 @@ class MarkdownViewState extends State<MarkdownView> {
                       customRenders: {
                         tableMatcher(): tableRender(),
                       },
+                      onLinkTap: viewModel.onTapLink,
+                      onAnchorTap:viewModel.onAnchorTap,
                     );
                   },
                 ),

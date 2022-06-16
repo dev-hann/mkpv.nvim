@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 
@@ -18,7 +20,8 @@ class SocketService {
     server.removeClient(client);
   }
 
-  void notifyClients(Request request) {
+  void notifyClients(Request request) async {
+    await Future.delayed(Duration(milliseconds: 300));
     final clientList = server.clientList;
     for (final client in clientList) {
       client.send(request);

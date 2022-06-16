@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mkpv/const/css_dark.dart';
 import 'package:flutter_mkpv/const/css_light.dart';
-import 'package:html/dom.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -22,10 +21,12 @@ class MarkdownViewModel {
   }
 
   void onData(Request request) {
+    print(request.type);
     switch (request.type) {
       case RequestType.connect:
         break;
       case RequestType.scroll:
+        print(request.data);
         // jumpToScroll(request.data);
         break;
       case RequestType.update:
@@ -88,14 +89,10 @@ class MarkdownViewModel {
 
   void onTapLink(String? url, RenderContext context,
       Map<String, String> attributes, dynamic element) {
-    print(url);
-    print("@#@#@#");
     if (url == null) return;
     launchUrlString(url);
   }
 
   void onAnchorTap(String? url, RenderContext context,
-    Map<String, String> attributes, dynamic element) {
-    print("@@#");
-  }
+      Map<String, String> attributes, dynamic element) {}
 }

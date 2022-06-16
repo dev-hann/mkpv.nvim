@@ -37,7 +37,6 @@ class MarkdownViewState extends State<MarkdownView> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
@@ -52,6 +51,7 @@ class MarkdownViewState extends State<MarkdownView> {
               valueListenable: viewModel.markdownNotofier,
               builder: (_, markdown, __) {
                 return Html(
+                  style: Style.fromCss("",viewModel.onCssParseError),
                   data: markdown,
                   customRenders: {
                     tableMatcher(): tableRender(),

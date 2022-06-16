@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+// import 'package:csslib/parser.dart' as css;
 
 class MarkdownViewModel {
   final ValueNotifier<bool> loadingNotifier = ValueNotifier(true);
@@ -56,5 +58,11 @@ class MarkdownViewModel {
 
   void onTapMode() {
     darkModeNotifier.value = !darkModeNotifier.value;
+  }
+
+  // Style
+
+  String? onCssParseError(String css, List errors) {
+    return "hello err";
   }
 }

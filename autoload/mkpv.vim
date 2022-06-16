@@ -70,7 +70,7 @@ function! mkpv#autocmd_init()
   " autocmd CursorMoved,CursorMovedI <buffer> call s:auto_scroll()
   autocmd CursorHold,CursorHoldI <buffer> call mkpv#update_mkpv()
   " auto close  
-  autocmd BufHidden <buffer> call mkpv#close_mkpv()
+  autocmd BufHidden,BufLeave,ExitPre <buffer> call mkpv#close_mkpv()
 endfunction
 
 function! mkpv#autocmd_dispose()

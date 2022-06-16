@@ -43,23 +43,29 @@ class MarkdownViewState extends State<MarkdownView> {
       valueListenable: viewModel.loadingNotifier,
       builder: (_, isLoading, __) {
         if (isLoading) return const SizedBox();
-        return Scaffold(
-          floatingActionButton: _floatingActionButton(),
-          body: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: ValueListenableBuilder<String>(
-              valueListenable: viewModel.markdownNotofier,
-              builder: (_, markdown, __) {
-                return Html(
-                  style: Style.fromCss("",viewModel.onCssParseError),
-                  data: markdown,
-                  customRenders: {
-                    tableMatcher(): tableRender(),
+        return ValueListenableBuilder<bool>(
+          valueListenable: viewModel.darkModeNotifier,
+          builder: (_, isDark, __) {
+            return Scaffold(
+              backgroundColor: viewModel.background,
+              floatingActionButton: _floatingActionButton(),
+              body: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: ValueListenableBuilder<String>(
+                  valueListenable: viewModel.markdownNotofier,
+                  builder: (_, markdown, __) {
+                    return Html(
+                      style: viewModel.style,
+                      data: markdown,
+                      customRenders: {
+                        tableMatcher(): tableRender(),
+                      },
+                    );
                   },
-                );
-              },
-            ),
-          ),
+                ),
+              ),
+            );
+          },
         );
       },
     );

@@ -38,16 +38,32 @@ class OpenCommand extends MKPVCommand {
   }
 
   void updateMarkdown([MkpvSocket? client]) {
-    final mk = markdownToHtml(
-      watcher.data,
-      extensionSet: ExtensionSet.gitHubWeb,
-    );
+    final mk = parsingMarkdown(watcher.data);
     final request = Request.update(mk);
     if (client != null) {
       client.send(request);
     } else {
       server.notifyClients(request);
     }
+  }
+
+  // parsingMarkdown
+  // Wrap Node with id by [Element].
+  // when scroll to scope through id.
+  String parsingMarkdown(String data) {
+    final data = watcher.data;
+    final splitLines = data.replaceAll('\r\n', '\n').split('\n');
+    final doc = Document(extensionSet: ExtensionSet.gitHubWeb);
+    final nodeList = doc.parseLines(splitLines);
+    final nodeLen = nodeList.length;
+    final List<Element> elementList = [];
+    for (int index = 0; index < nodeLen; index++) {
+      final element = Element("p", [nodeList[index]]);
+      element.generatedId = "$index";
+      elementList.add(element);
+    }
+    final res = HtmlRenderer().render(elementList);
+    return res;
   }
 
   void disposeWatch() {

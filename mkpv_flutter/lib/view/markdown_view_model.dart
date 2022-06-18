@@ -21,12 +21,11 @@ class MarkdownViewModel {
   }
 
   void onData(Request request) {
-    print(request.type);
     switch (request.type) {
       case RequestType.connect:
         break;
       case RequestType.scroll:
-        print(request.data);
+        // TODO: line converto to id. 
         // jumpToScroll(request.data);
         break;
       case RequestType.update:
@@ -43,21 +42,15 @@ class MarkdownViewModel {
 
   final ValueNotifier<String> markdownNotofier = ValueNotifier("");
   void updateMarkdown(String data) {
-    markdownNotofier.value = wrapHTML(data);
-  }
-
-  String wrapHTML(String data) {
-    return '''
-      <body>
-      $data
-      </body>
-        ''';
+    markdownNotofier.value = data;
   }
 
   final AutoScrollController scrollController = AutoScrollController();
-  void jumpToScroll(int line) {
-    // scrollController.scrollToIndex(line,
-    //     preferPosition: AutoScrollPosition.middle);
+  final GlobalKey anchorKey = GlobalKey();
+  void jumpToScroll(String id) {
+    final anchor = AnchorKey.forId(anchorKey, id)?.currentContext;
+    if (anchor == null) return;
+    Scrollable.ensureVisible(anchor);
   }
 
   late Map<String, Style> _light;
@@ -68,6 +61,7 @@ class MarkdownViewModel {
   }
 
   final ValueNotifier<bool> darkModeNotifier = ValueNotifier(false);
+  int testIndex=0;
   bool get isDark => darkModeNotifier.value;
   void onTapMode() {
     darkModeNotifier.value = !darkModeNotifier.value;

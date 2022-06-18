@@ -49,22 +49,22 @@ class MarkdownViewState extends State<MarkdownView> {
             return Scaffold(
               backgroundColor: viewModel.background,
               floatingActionButton: _floatingActionButton(),
-              body: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: ValueListenableBuilder<String>(
-                  valueListenable: viewModel.markdownNotofier,
-                  builder: (_, markdown, __) {
-                    return Html(
+              body: ValueListenableBuilder<String>(
+                valueListenable: viewModel.markdownNotofier,
+                builder: (_, markdown, __) {
+                  return SingleChildScrollView(
+                    child: Html(
+                      anchorKey:viewModel.anchorKey,
                       style: viewModel.style,
                       data: markdown,
                       customRenders: {
                         tableMatcher(): tableRender(),
                       },
-                      onLinkTap: viewModel.onTapLink,
-                      onAnchorTap:viewModel.onAnchorTap,
-                    );
-                  },
-                ),
+                      // onLinkTap: viewModel.onTapLink,
+                      // onAnchorTap:viewModel.onAnchorTap,
+                    ),
+                  );
+                },
               ),
             );
           },

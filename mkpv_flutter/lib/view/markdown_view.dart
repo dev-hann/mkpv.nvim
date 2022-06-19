@@ -54,7 +54,7 @@ class MarkdownViewState extends State<MarkdownView> {
                 builder: (_, markdown, __) {
                   return SingleChildScrollView(
                     child: Html(
-                      anchorKey:viewModel.anchorKey,
+                      anchorKey: viewModel.anchorKey,
                       style: viewModel.style,
                       data: markdown,
                       customRenders: {

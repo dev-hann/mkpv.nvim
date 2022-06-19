@@ -9,7 +9,6 @@ environment:
 dependencies: 
   args: 
   watcher: ^1.0.1
-  markdown: 
   mkpv_socket:
     path: ../mkpv_socket/
 dev_dependencies:

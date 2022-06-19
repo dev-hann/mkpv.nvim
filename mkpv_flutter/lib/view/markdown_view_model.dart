@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mkpv/const/css_dark.dart';
 import 'package:flutter_mkpv/const/css_light.dart';
+import 'package:markdown/markdown.dart' as mk;
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
@@ -25,7 +26,7 @@ class MarkdownViewModel {
       case RequestType.connect:
         break;
       case RequestType.scroll:
-        // TODO: line converto to id. 
+        // TODO: line converto to id.
         // jumpToScroll(request.data);
         break;
       case RequestType.update:
@@ -42,7 +43,25 @@ class MarkdownViewModel {
 
   final ValueNotifier<String> markdownNotofier = ValueNotifier("");
   void updateMarkdown(String data) {
-    markdownNotofier.value = data;
+    markdownNotofier.value = parsingMarkdown(data);
+  }
+
+  // parsingMarkdown
+  // Wrap Node with id by [Element].
+  // when scroll to scope through id.
+  String parsingMarkdown(String data) {
+    final splitLines = data.replaceAll('\r\n', '\n').split('\n');
+    final doc = mk.Document(extensionSet: mk.ExtensionSet.gitHubWeb);
+    final nodeList = doc.parseLines(splitLines);
+    final nodeLen = nodeList.length;
+    final List<mk.Element> elementList = [];
+    for (int index = 0; index < nodeLen; index++) {
+      final element = mk.Element("div", [nodeList[index]]);
+      element.generatedId = "$index";
+      elementList.add(element);
+    }
+    final res = mk.HtmlRenderer().render(elementList);
+    return res;
   }
 
   final AutoScrollController scrollController = AutoScrollController();
@@ -61,7 +80,6 @@ class MarkdownViewModel {
   }
 
   final ValueNotifier<bool> darkModeNotifier = ValueNotifier(false);
-  int testIndex=0;
   bool get isDark => darkModeNotifier.value;
   void onTapMode() {
     darkModeNotifier.value = !darkModeNotifier.value;

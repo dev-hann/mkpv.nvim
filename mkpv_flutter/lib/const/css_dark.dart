@@ -2,11 +2,7 @@ const cssDark = '''
  body {
      font-family: Helvetica, arial, sans-serif;
      font-size: 14px;
-     line-height: 1.6;
-     padding-top: 10px;
-     padding-bottom: 10px;
      background-color: #0d1117;
-     padding: 30px;
 }
  body > *:first-child {
      margin-top: 0 !important;
@@ -31,8 +27,7 @@ const cssDark = '''
      bottom: 0;
 }
  h1, h2, h3, h4, h5, h6 {
-     margin: 20px 0 10px;
-     padding: 0;
+     margin: 0px 0 10px;
      font-weight: bold;
      -webkit-font-smoothing: antialiased;
      cursor: text;
@@ -82,9 +77,11 @@ const cssDark = '''
      color: #777777;
      font-size: 14px;
 }
- p, blockquote, ul, ol, dl, li, table, pre {
+p, blockquote, ul, ol, dl, li, table, pre {
      margin: 15px 0;
 }
+
+
  hr {
      background: transparent url("../../images/modules/pulls/dirty-shade.png") repeat-x 0 0;
      border: 0 none;

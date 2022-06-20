@@ -49,14 +49,39 @@ class MarkdownViewModel {
   // parsingMarkdown
   // Wrap Node with id by [Element].
   // when scroll to scope through id.
+  final Map<int, List<mk.Node>> _markdownMap = {};
+  void testParse(String data) {
+    if (data.isEmpty) return;
+    int currentLine = 1;
+    final splitLines = data.replaceAll('\r\n', '\n').split('\n');
+    final len = splitLines.length;
+    final doc = mk.Document(extensionSet: mk.ExtensionSet.gitHubWeb);
+    final List<String> tmpLines = [];
+    for (int index = 0; index < len; index++) {
+      tmpLines.add(splitLines[index]);
+      final list = doc.parseLines(tmpLines);
+      if (list.isNotEmpty) {
+        _markdownMap[currentLine] = list;
+        currentLine = index + 1;
+        tmpLines.clear();
+      }
+    }
+    _markdownMap.forEach((key, value) {
+      print(key);
+      print(value);
+    });
+  }
+
   String parsingMarkdown(String data) {
+    testParse(data);
     final splitLines = data.replaceAll('\r\n', '\n').split('\n');
     final doc = mk.Document(extensionSet: mk.ExtensionSet.gitHubWeb);
     final nodeList = doc.parseLines(splitLines);
     final nodeLen = nodeList.length;
     final List<mk.Element> elementList = [];
     for (int index = 0; index < nodeLen; index++) {
-      final element = mk.Element("div", [nodeList[index]]);
+      final node = nodeList[index];
+      final element = mk.Element("div", [node]);
       element.generatedId = "$index";
       elementList.add(element);
     }

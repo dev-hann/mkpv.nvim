@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mkpv/const/css_dark.dart';
 import 'package:flutter_mkpv/const/css_light.dart';
+import 'package:flutter_mkpv/document/document.dart';
 import 'package:flutter_mkpv/syntax/syntax.dart';
 import 'package:markdown/markdown.dart' as mk;
 import 'package:mkpv_socket/mkpv_socket.dart';
@@ -51,27 +52,7 @@ class MarkdownViewModel {
   // Wrap Node with id by [Element].
   // when scroll to scope through id.
   String parsingMarkdown(String data) {
-    if (data.isEmpty) return "";
-    final splitLines = data.replaceAll('\r\n', '\n').split('\n');
-    // final doc = mk.Document(extensionSet: mk.ExtensionSet.gitHubWeb);
-    final doc = mk.Document(
-      withDefaultBlockSyntaxes: false,
-      extensionSet: mk.ExtensionSet.none,
-      blockSyntaxes: [
-        mk.HeaderSyntax(),
-        // MKEmptySyntax(),
-        // MKSetextHeaderSyntax(splitLines),
-        // MKHeaderSyntax(splitLines),
-        // MKFencedCodeBolckSyntax(splitLines),
-        // MKUnorderedListSyntax(splitLines),
-        // MKOrderedListSyntax(splitLines),
-        // MKTableSyntax(splitLines),
-        // MKParagraphSyntax(splitLines),
-      ],
-    );
-    final res = mk.HtmlRenderer().render(doc.parseLines(splitLines));
-    print(res);
-    return res;
+    return MKDocument().render(data);
   }
 
   final AutoScrollController scrollController = AutoScrollController();

@@ -11,4 +11,26 @@ class MKBlockParser extends BlockParser {
     super.advance();
     currentLine++;
   }
+
+  Node wrapLine(Node node) {
+    final element = Element("div", [node]);
+    element.generatedId = "$currentLine";
+    return element;
+  }
+
+  @override
+  List<Node> parseLines() {
+    var blocks = <Node>[];
+    while (!isDone) {
+      for (var syntax in blockSyntaxes) {
+        if (syntax.canParse(this)) {
+          var block = syntax.parse(this);
+          if (block != null) blocks.add(wrapLine(block));
+          break;
+        }
+      }
+    }
+
+    return blocks;
+  }
 }

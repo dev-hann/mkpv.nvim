@@ -27,7 +27,7 @@ class MarkdownViewModel {
       case RequestType.connect:
         break;
       case RequestType.scroll:
-        // TODO: line convert to id.
+        // TODO: line converto to id.
         jumpToScroll("${request.data}");
         break;
       case RequestType.update:

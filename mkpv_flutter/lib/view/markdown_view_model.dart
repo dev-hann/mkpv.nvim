@@ -5,12 +5,12 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mkpv/const/css_dark.dart';
 import 'package:flutter_mkpv/const/css_light.dart';
 import 'package:flutter_mkpv/document/document.dart';
-import 'package:flutter_mkpv/syntax/syntax.dart';
-import 'package:markdown/markdown.dart' as mk;
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+
+const _mkScrollDuration = Duration(milliseconds: 300);
 
 class MarkdownViewModel {
   final ValueNotifier<bool> loadingNotifier = ValueNotifier(true);
@@ -28,7 +28,6 @@ class MarkdownViewModel {
       case RequestType.connect:
         break;
       case RequestType.scroll:
-        // TODO: line converto to id.
         jumpToScroll("${request.data}");
         break;
       case RequestType.update:
@@ -48,9 +47,6 @@ class MarkdownViewModel {
     markdownNotofier.value = parsingMarkdown(data);
   }
 
-  // parsing Markdown
-  // Wrap Node with id by [Element].
-  // when scroll to scope through id.
   String parsingMarkdown(String data) {
     return MKDocument().render(data);
   }
@@ -60,7 +56,7 @@ class MarkdownViewModel {
   void jumpToScroll(String id) {
     final anchor = AnchorKey.forId(anchorKey, id)?.currentContext;
     if (anchor == null) return;
-    Scrollable.ensureVisible(anchor);
+    Scrollable.ensureVisible(anchor, duration: _mkScrollDuration);
   }
 
   late Map<String, Style> _light;

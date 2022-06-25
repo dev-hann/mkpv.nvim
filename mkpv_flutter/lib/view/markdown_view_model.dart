@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mkpv/const/css_dark.dart';
 import 'package:flutter_mkpv/const/css_light.dart';
+import 'package:flutter_mkpv/syntax/syntax.dart';
 import 'package:markdown/markdown.dart' as mk;
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
@@ -26,7 +27,7 @@ class MarkdownViewModel {
       case RequestType.connect:
         break;
       case RequestType.scroll:
-        // TODO: line converto to id.
+        // TODO: line convert to id.
         jumpToScroll("${request.data}");
         break;
       case RequestType.update:
@@ -46,28 +47,30 @@ class MarkdownViewModel {
     markdownNotofier.value = parsingMarkdown(data);
   }
 
-  // parsingMarkdown
+  // parsing Markdown
   // Wrap Node with id by [Element].
   // when scroll to scope through id.
   String parsingMarkdown(String data) {
     if (data.isEmpty) return "";
     final splitLines = data.replaceAll('\r\n', '\n').split('\n');
-    final len = splitLines.length;
-    final doc = mk.Document(extensionSet: mk.ExtensionSet.gitHubWeb);
-    final List<String> tmpLines = [];
-    final List<mk.Element> elementList = [];
-    // table syntax error. make it 
-    for (int index = 0; index < len; index++) {
-      tmpLines.add(splitLines[index]);
-      final List<mk.Node> list = doc.parseLines(tmpLines);
-      if (list.isNotEmpty) {
-        final element = mk.Element("div", list);
-        element.generatedId = "${index + 1}";
-        elementList.add(element);
-        tmpLines.clear();
-      }
-    }
-    final res = mk.HtmlRenderer().render(elementList);
+    // final doc = mk.Document(extensionSet: mk.ExtensionSet.gitHubWeb);
+    final doc = mk.Document(
+      withDefaultBlockSyntaxes: false,
+      extensionSet: mk.ExtensionSet.none,
+      blockSyntaxes: [
+        mk.HeaderSyntax(),
+        // MKEmptySyntax(),
+        // MKSetextHeaderSyntax(splitLines),
+        // MKHeaderSyntax(splitLines),
+        // MKFencedCodeBolckSyntax(splitLines),
+        // MKUnorderedListSyntax(splitLines),
+        // MKOrderedListSyntax(splitLines),
+        // MKTableSyntax(splitLines),
+        // MKParagraphSyntax(splitLines),
+      ],
+    );
+    final res = mk.HtmlRenderer().render(doc.parseLines(splitLines));
+    print(res);
     return res;
   }
 

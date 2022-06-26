@@ -20,7 +20,7 @@ class SocketService {
     server.removeClient(client);
   }
 
-  void notifyClients(Request request) async {
+  Future notifyClients(Request request) async {
     await Future.delayed(Duration(milliseconds: 300));
     final clientList = server.clientList;
     for (final client in clientList) {

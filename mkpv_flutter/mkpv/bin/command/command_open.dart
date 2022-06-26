@@ -32,17 +32,17 @@ class OpenCommand extends MKPVCommand {
     watcher.addListener(watchListener);
   }
 
-  void watchListener(WatchEvent event) {
+  void watchListener(WatchEvent event) async {
     watcher.refreshData();
-    updateMarkdown();
+    await updateMarkdown();
   }
 
-  void updateMarkdown([MkpvSocket? client]) {
+  Future updateMarkdown([MkpvSocket? client]) async {
     final request = Request.update(watcher.data);
     if (client != null) {
       client.send(request);
     } else {
-      server.notifyClients(request);
+      await server.notifyClients(request);
     }
   }
 
@@ -59,20 +59,18 @@ class OpenCommand extends MKPVCommand {
   }
 
   void serverListener(MkpvSocket socket) {
-    void closeServer() {
-      server.notifyClients(Request.close());
+    void closeServer() async {
+      await server.notifyClients(Request.close());
       socket.dispose();
       exit(0);
     }
 
     void onClientError(dynamic err) {
-      print(err);
       server.removeClient(socket);
       socket.dispose();
     }
 
     void onClientDone() {
-      print("client left");
       server.removeClient(socket);
       socket.dispose();
       if (server.isEmpty) {
@@ -80,12 +78,12 @@ class OpenCommand extends MKPVCommand {
       }
     }
 
-    void onClientData(Request request) {
+    Future onClientData(Request request) async {
       final type = request.type;
       switch (type) {
         case RequestType.connect:
           server.addClient(socket);
-          updateMarkdown(socket);
+          await updateMarkdown(socket);
           break;
         case RequestType.close:
           closeServer();
@@ -93,7 +91,7 @@ class OpenCommand extends MKPVCommand {
         case RequestType.update:
           break;
         case RequestType.scroll:
-          server.notifyClients(request);
+          await server.notifyClients(request);
           break;
       }
     }

@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mkpv/const/css_dark.dart';
 import 'package:flutter_mkpv/const/css_light.dart';
-import 'package:flutter_mkpv/document/document.dart';
+import 'package:flutter_mkpv/model/document.dart';
 import 'package:mkpv_socket/mkpv_socket.dart';
 import 'package:mkpv_socket/socket/socket_server.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 const _mkScrollDuration = Duration(milliseconds: 300);
 
 class MarkdownViewModel {
+  MarkdownViewModel() {
+    init();
+  }
+
   final ValueNotifier<bool> loadingNotifier = ValueNotifier(true);
   late MkpvSocket socket;
   void init() async {
@@ -24,6 +27,7 @@ class MarkdownViewModel {
   }
 
   void onData(Request request) {
+    print(request.type);
     switch (request.type) {
       case RequestType.connect:
         break;
@@ -51,7 +55,10 @@ class MarkdownViewModel {
     return MKDocument().render(data);
   }
 
-  final AutoScrollController scrollController = AutoScrollController();
+  ScrollController scrollController = ScrollController();
+  void updateScrollController(ScrollController newController) {
+  }
+
   final GlobalKey anchorKey = GlobalKey();
   void jumpToScroll(String id) {
     final anchor = AnchorKey.forId(anchorKey, id)?.currentContext;

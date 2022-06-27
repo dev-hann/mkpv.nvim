@@ -20,6 +20,12 @@ class MarkdownViewState extends State<MarkdownView> {
     viewModel.init();
   }
 
+  @override
+  void didUpdateWidget(covariant MarkdownView oldWidget) {
+    viewModel.updateScrollController(viewModel.scrollController);
+    super.didUpdateWidget(oldWidget);
+  }
+
   FloatingActionButton _floatingActionButton() {
     return FloatingActionButton(
       mini: true,

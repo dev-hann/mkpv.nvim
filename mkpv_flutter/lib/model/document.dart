@@ -1,4 +1,4 @@
-import 'package:flutter_mkpv/document/block_parser.dart';
+import 'package:flutter_mkpv/model/block_parser.dart';
 import 'package:markdown/markdown.dart';
 
 class MKDocument extends Document {

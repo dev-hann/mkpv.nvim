@@ -27,15 +27,15 @@ class MarkdownViewModel {
   }
 
   void onData(Request request) {
-    print(request.type);
+    final data = request.data;
     switch (request.type) {
       case RequestType.connect:
         break;
       case RequestType.scroll:
-        jumpToScroll("${request.data}");
+        jumpToScroll("$data");
         break;
       case RequestType.update:
-        updateMarkdown(request.data);
+        updateMarkdown(data);
         return;
       case RequestType.close:
         exit(0);
@@ -52,16 +52,14 @@ class MarkdownViewModel {
   }
 
   String parsingMarkdown(String data) {
-    return MKDocument().render(data);
-  }
-
-  ScrollController scrollController = ScrollController();
-  void updateScrollController(ScrollController newController) {
+    final res = MKDocument().render(data);
+    return res;
   }
 
   final GlobalKey anchorKey = GlobalKey();
   void jumpToScroll(String id) {
     final anchor = AnchorKey.forId(anchorKey, id)?.currentContext;
+    print(anchor);
     if (anchor == null) return;
     Scrollable.ensureVisible(anchor, duration: _mkScrollDuration);
   }

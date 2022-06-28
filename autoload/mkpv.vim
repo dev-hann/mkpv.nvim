@@ -32,8 +32,7 @@ endfunction
 
 function! mkpv#update_mkpv()
   call s:auto_save()
-  " image size?
-   call s:auto_scroll()
+  call s:auto_scroll()
 endfunction
 
 function! mkpv#toggle_auto_scroll()
@@ -51,10 +50,7 @@ endfunction
 function! s:auto_scroll()
   if g:auto_scroll_mkpv == 1
     let current_line = line(".")
-    " let max_line = line("$") + 0.0
-    " let position = current_line/max_line
-    " let output = system(g:mkpv.' scroll '.string(position))
-     let output = system(g:mkpv.' scroll '.string(current_line))
+    let output = system(g:mkpv.' scroll '.string(current_line))
   endif
 endfunction
 
@@ -64,15 +60,17 @@ function! mkpv#scroll_mkpv(position)
 endfunction
 
 function! mkpv#autocmd_init()
-  execute 'augroup MKPV_AUTOCMD_INIT' . bufnr('%')
+  augroup MKPV_AUTOCMD_INIT
   autocmd!
 
   " autocmd CursorMoved,CursorMovedI <buffer> call s:auto_scroll()
   autocmd CursorHold,CursorHoldI <buffer> call mkpv#update_mkpv()
+  
   " auto close  
   autocmd BufHidden,BufLeave,ExitPre <buffer> call mkpv#close_mkpv()
+  augroup END
 endfunction
 
 function! mkpv#autocmd_dispose()
-  execute 'autocmd! ' . 'MKPV_AUTOCMD_INIT' . bufnr('%')
+   autocmd! MKPV_AUTOCMD_INIT
 endfunction

@@ -12,18 +12,26 @@ class MarkdownView extends StatefulWidget {
   }
 }
 
-class MarkdownViewState extends State<MarkdownView> {
+class MarkdownViewState extends State<MarkdownView>
+    with WidgetsBindingObserver {
   final MarkdownViewModel viewModel = MarkdownViewModel();
   @override
   void initState() {
     super.initState();
     viewModel.init();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
-  void didUpdateWidget(covariant MarkdownView oldWidget) {
-    viewModel.updateScrollController(viewModel.scrollController);
-    super.didUpdateWidget(oldWidget);
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    setState(() {});
+    super.didChangeMetrics();
   }
 
   FloatingActionButton _floatingActionButton() {
@@ -59,6 +67,7 @@ class MarkdownViewState extends State<MarkdownView> {
                 valueListenable: viewModel.markdownNotofier,
                 builder: (_, markdown, __) {
                   return SingleChildScrollView(
+                    padding: const EdgeInsets.only(bottom: kToolbarHeight * 5),
                     child: Html(
                       anchorKey: viewModel.anchorKey,
                       style: viewModel.style,

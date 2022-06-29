@@ -30,7 +30,6 @@ class MarkdownViewState extends State<MarkdownView>
 
   @override
   void didChangeMetrics() {
-    setState(() {});
     super.didChangeMetrics();
   }
 
@@ -51,7 +50,6 @@ class MarkdownViewState extends State<MarkdownView>
     );
   }
 
-  @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
       valueListenable: viewModel.loadingNotifier,

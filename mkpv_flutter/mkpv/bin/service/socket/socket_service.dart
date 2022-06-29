@@ -9,6 +9,7 @@ class SocketService {
   bool get isEmpty => server.clientList.isEmpty;
 
   Future<Stream<MkpvSocket>> bind() async {
+    _initRequestStream();
     return server.bind();
   }
 
@@ -20,12 +21,25 @@ class SocketService {
     server.removeClient(client);
   }
 
+  final StreamController<Request> _requestController = StreamController();
+
+  void _initRequestStream() {
+    _requestController.stream.listen((request) async {
+      await Future.delayed(Duration(milliseconds: 300));
+      final clientList = server.clientList;
+      for (final client in clientList) {
+        client.send(request);
+      }
+    });
+  }
+
   Future notifyClients(Request request) async {
-    await Future.delayed(Duration(milliseconds: 300));
-    final clientList = server.clientList;
-    for (final client in clientList) {
-      client.send(request);
-    }
+    _requestController.add(request);
+    // await Future.delayed(Duration(milliseconds: 300));
+    // final clientList = server.clientList;
+    // for (final client in clientList) {
+    //   client.send(request);
+    // }
   }
 
   Future<MkpvSocket> connect() async {

@@ -10,7 +10,7 @@ class CloseCommand extends MKPVCommand with SocketCommandMixin {
   @override
   void run() async {
     await connect();
-    send(RequestType.close);
+    send(Request.close());
     socket.dispose();
     exit(0);
   }

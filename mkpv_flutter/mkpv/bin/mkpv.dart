@@ -8,7 +8,7 @@ void main(List<String> arguments) {
   final runner = CommandRunner("mkpv", "Markdown Perview for Vim.")
     ..addCommand(OpenCommand())
     ..addCommand(CloseCommand())
-    ..addCommand(ScrollCommand());
+    ..addCommand(UpdateCommand());
 
   runner.run(arguments).catchError((e) {
     if (e is! UsageException) {

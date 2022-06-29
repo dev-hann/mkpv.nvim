@@ -9,11 +9,11 @@ class ScrollCommand extends MKPVCommand with SocketCommandMixin {
 
   @override
   void run() async {
-    final list = argResults!.arguments;
-    await connect();
-    final line = int.tryParse(list.first) ?? 1;
-    send(RequestType.scroll, line);
-    socket.dispose();
-    exit(0);
+    // final list = argResults!.arguments;
+    // await connect();
+    // final line = int.tryParse(list.first) ?? 1;
+    // send(RequestType.scroll, line);
+    // socket.dispose();
+    // exit(0);
   }
 }

@@ -59,7 +59,6 @@ class MarkdownViewModel {
   final GlobalKey anchorKey = GlobalKey();
   void jumpToScroll(String id) {
     final anchor = AnchorKey.forId(anchorKey, id)?.currentContext;
-    print(anchor);
     if (anchor == null) return;
     Scrollable.ensureVisible(anchor, duration: _mkScrollDuration);
   }

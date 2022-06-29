@@ -1,4 +1,5 @@
 library mkpv_command;
+
 import 'dart:async';
 import 'dart:io';
 
@@ -13,6 +14,7 @@ import '../service/watcher/watcher_service.dart';
 part 'command_open.dart';
 part 'command_close.dart';
 part 'command_scroll.dart';
+part 'command_update.dart';
 
 abstract class MKPVCommand extends Command {
   @override
@@ -25,8 +27,8 @@ mixin SocketCommandMixin on MKPVCommand {
     socket = await MkpvSocket.connect();
   }
 
-  void send(RequestType requestType, [dynamic data]) {
-    socket.send(Request(requestType.index, data));
+  void send(Request request) {
+    socket.send(request);
   }
 
   void dispose() {

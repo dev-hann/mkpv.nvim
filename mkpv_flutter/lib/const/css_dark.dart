@@ -3,6 +3,7 @@ const cssDark = '''
      font-family: Helvetica, arial, sans-serif;
      font-size: 14px;
      background-color: #0d1117;
+     color: #c9d1d9
 }
  body > *:first-child {
      margin-top: 0 !important;

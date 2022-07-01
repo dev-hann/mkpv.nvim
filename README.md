@@ -28,6 +28,13 @@ then run the following in vim
 	
 ## Config
 ```
+  // if when value is 1, when open Readme file,
+  // automatically open preview app.
+  g:auto_open_mkpv=0
+
+  // according your current line on vim,
+  // preview app auto scroll to current line.
+  g:auto_scroll_mkpv=1
 
 ```
 

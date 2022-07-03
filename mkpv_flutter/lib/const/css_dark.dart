@@ -15,7 +15,7 @@ const cssDark = '''
      color: #4183C4;
 }
  a.absent {
-     color: #cc0000;
+    color: #cc0000;
 }
  a.anchor {
      display: block;
@@ -58,12 +58,10 @@ const cssDark = '''
 }
  h1 {
      font-size: 28px;
-     color: black;
 }
  h2 {
      font-size: 24px;
      border-bottom: 1px solid #cccccc;
-     color: black;
 }
  h3 {
      font-size: 18px;
@@ -75,7 +73,6 @@ const cssDark = '''
      font-size: 14px;
 }
  h6 {
-     color: #777777;
      font-size: 14px;
 }
 p, blockquote, ul, ol, dl, li, table, pre {
@@ -170,7 +167,6 @@ p, blockquote, ul, ol, dl, li, table, pre {
 }
  table tr {
      border-top: 1px solid #cccccc;
-     background-color: white;
      margin: 0;
      padding: 0;
 }
@@ -286,7 +282,6 @@ p, blockquote, ul, ol, dl, li, table, pre {
      padding: 0;
      white-space: pre;
      border: none;
-     background: transparent;
 }
  .highlight pre {
      background-color: #f8f8f8;
@@ -298,7 +293,6 @@ p, blockquote, ul, ol, dl, li, table, pre {
      border-radius: 3px;
 }
  pre {
-     background-color: #f8f8f8;
      border: 1px solid #cccccc;
      font-size: 13px;
      line-height: 19px;
@@ -307,7 +301,6 @@ p, blockquote, ul, ol, dl, li, table, pre {
      border-radius: 3px;
 }
  pre code, pre tt {
-     background-color: transparent;
      border: none;
 }
 ''';

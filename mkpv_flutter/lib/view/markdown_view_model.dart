@@ -35,6 +35,7 @@ class MarkdownViewModel {
         jumpToScroll("$data");
         break;
       case RequestType.update:
+        print(data);
         updateMarkdown(data);
         return;
       case RequestType.close:
